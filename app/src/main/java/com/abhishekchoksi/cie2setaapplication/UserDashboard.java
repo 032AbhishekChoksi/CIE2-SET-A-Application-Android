@@ -1,5 +1,6 @@
 package com.abhishekchoksi.cie2setaapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -10,6 +11,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -28,6 +31,28 @@ public class UserDashboard extends AppCompatActivity {
     String leaveType = "";
     String fDate = "";
     String tDate = "";
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.MenuLogout:
+                SharedPreferences pref = getSharedPreferences("LoginData",MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("UserName","Fail");
+                editor.commit();
+                startActivity(new Intent(UserDashboard.this,LoginActivity.class));
+                finish();
+                return true;
+        }
+        return (super.onOptionsItemSelected(item));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

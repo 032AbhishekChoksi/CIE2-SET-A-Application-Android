@@ -1,15 +1,41 @@
 package com.abhishekchoksi.cie2setaapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 public class AdminDashboard extends AppCompatActivity {
     TextView textViewName,textViewReason,textViewFrom_Date,textViewTo_Date,textViewLeave_Type,textViewLeave_Status,textAdminLogout;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.MenuLogout:
+                SharedPreferences pref = getSharedPreferences("LoginData",MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("UserName","Fail");
+                editor.commit();
+                startActivity(new Intent(AdminDashboard.this,LoginActivity.class));
+                finish();
+                return true;
+        }
+        return (super.onOptionsItemSelected(item));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
